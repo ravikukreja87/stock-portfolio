@@ -22,4 +22,6 @@ The portfolio list is read from the bundled `Holdings.csv` file. List uploads ha
 
 Open `reports.html` for the two focused reports: holdings below 200 DMA, and NSE 200 scrips within 5% of their 52-week high while above 200 DMA. Reports use the cached screening results and do not make additional API calls.
 
+If GitHub Pages shows an empty report, open **Reports → Refresh data**, confirm the dialog, and check the status line below the header. If the status says the CSV files cannot be loaded, verify that `Nifty200.csv` and `Holdings.csv` are committed in the same repository root as `reports.html`. GitHub Pages serves committed files only; local browser storage and API results are not deployed with the repository. If a new deployment is not visible, use a hard refresh (`Ctrl+F5`) and check **Actions → Pages build and deployment** for a successful deployment.
+
 The screening limit defaults to 20 symbols to avoid API rate limits. Increase it in API settings when required.

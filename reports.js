@@ -25,6 +25,8 @@ function render() {
   $("nseTable").innerHTML = nearHigh.length ? nearHigh.map((row) => `<tr><td>${rowName(row)}</td><td class="mono">${price(row.price)}</td><td class="mono">${price(row.dma200)}</td><td class="mono positive">${price(row.yearHigh)}</td><td class="mono positive">${((row.yearHigh / row.price - 1) * 100).toFixed(1)}%</td></tr>`).join("") : emptyRow("No NSE 200 scrips currently match both conditions.");
   const timestamps = Object.values(cache).map((entry) => entry.fetchedAt).filter(Boolean);
   if (timestamps.length) $("reportTime").textContent = `Data ${new Date(Math.max(...timestamps)).toLocaleString([], { dateStyle: "medium", timeStyle: "short" })}`;
+  $("deploymentStatus").textContent = `${nse.size} NSE symbols · ${holdings.size} holdings · ${rows.length} cached results`;
+  $("deploymentStatus").classList.toggle("has-data", rows.length > 0);
   $("reportEmpty").hidden = rows.length > 0;
 }
 
@@ -74,8 +76,11 @@ async function initialise() {
     const [nse, portfolio] = await Promise.all([readSymbols("Nifty200.csv"), readSymbols("Holdings.csv")]);
     localStorage.setItem("marketLensSymbols", JSON.stringify(nse));
     localStorage.setItem("marketLensPortfolio", JSON.stringify(portfolio));
+    $("deploymentStatus").textContent = `${nse.length} NSE symbols · ${portfolio.length} holdings · waiting for first refresh`;
     render();
   } catch (error) {
+    $("deploymentStatus").textContent = `List load failed: ${error.message}`;
+    $("deploymentStatus").classList.add("error");
     $("reportEmpty").hidden = false;
     $("reportEmpty").querySelector("span").textContent = error.message;
   }
