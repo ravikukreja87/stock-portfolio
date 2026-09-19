@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#07111f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Market Lens | Indian Stock Screener</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <script>if (!new URLSearchParams(location.search).has("overview")) location.replace("./reports.html");</script>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="brand"><span class="brand-mark">↗</span><span>market<span class="brand-accent">lens</span></span></div>
+        <p class="eyebrow">INDIA / NSE</p>
+        <nav>
+          <a class="nav-link active" href="#overview"><span>◈</span> Overview</a>
+          <a class="nav-link" href="./lists.html"><span>⌁</span> Lists</a>
+          <a class="nav-link" href="./reports.html"><span>▤</span> Reports</a>
+          <a class="nav-link" href="#settings"><span>⚙</span> API settings</a>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="api-status"><span class="status-dot"></span><span id="connectionLabel">Ready to connect</span></div>
+          <a href="https://indianapi.in/documentation/indian-stock-market" target="_blank" rel="noreferrer">API documentation ↗</a>
+        </div>
+      </aside>
+
+      <main class="main">
+        <header class="topbar">
+          <div><p class="eyebrow">PORTFOLIO INTELLIGENCE</p><h1>Market overview</h1></div>
+          <div class="topbar-actions"><span id="lastUpdated">Not yet synced</span><button class="button primary" id="syncButton">Sync market <span>↗</span></button></div>
+        </header>
+
+        <section class="hero-grid" id="overview">
+          <div class="hero-card">
+            <div class="hero-copy"><p class="eyebrow accent">TODAY'S SIGNAL</p><h2>Find weakness<br />before the crowd.</h2><p>Screen your NSE universe and personal holdings against the 200-day moving average and 52-week extremes.</p><button class="text-button" id="heroImport">Import a universe <span>→</span></button></div>
+            <div class="hero-orbit"><div class="orbit-ring ring-one"></div><div class="orbit-ring ring-two"></div><div class="orbit-core">200<br /><small>DMA</small></div><span class="orbit-dot dot-one"></span><span class="orbit-dot dot-two"></span></div>
+          </div>
+          <div class="metric-card"><div class="metric-label">BELOW 200 DMA</div><div class="metric-value" id="belowDmaCount">—</div><div class="metric-foot"><span class="negative" id="belowDmaPercent">Waiting for data</span><span>of screened</span></div></div>
+          <div class="metric-card"><div class="metric-label">52W LOW ZONE</div><div class="metric-value" id="lowCount">—</div><div class="metric-foot"><span class="warning" id="lowPercent">Within 5%</span><span>of low</span></div></div>
+          <div class="metric-card"><div class="metric-label">52W HIGH ZONE</div><div class="metric-value" id="highCount">—</div><div class="metric-foot"><span class="positive" id="highPercent">Within 5%</span><span>of high</span></div></div>
+        </section>
+
+        <section class="workspace">
+          <div class="panel screener-panel">
+            <div class="panel-heading"><div><p class="eyebrow">SCREENER</p><h3>Signal board</h3></div><div class="segmented" id="filterTabs"><button class="selected" data-filter="all">All</button><button data-filter="dma">Below DMA</button><button data-filter="low">52W low</button><button data-filter="high">52W high</button></div></div>
+            <div class="table-wrap"><table><thead><tr><th>STOCK</th><th>LAST PRICE</th><th>200 DMA</th><th>VS DMA</th><th>52W RANGE</th><th>SIGNAL</th></tr></thead><tbody id="stockTable"><tr><td colspan="6" class="empty-state"><div class="empty-icon">◌</div><strong>No market data yet</strong><span>Import symbols, add your API key, then sync.</span></td></tr></tbody></table></div>
+            <div class="table-footer"><span id="tableSummary">0 stocks loaded</span><button class="text-button" id="loadMore" hidden>Load more <span>→</span></button></div>
+          </div>
+
+          <aside class="panel activity-panel">
+            <div class="panel-heading"><div><p class="eyebrow">UNIVERSE</p><h3>Your lists</h3></div><button class="icon-button" id="addList">+</button></div>
+            <a class="list-card active-list list-link" href="./lists.html?list=nse"><div class="list-icon green">N</div><div><strong>NSE 200</strong><small id="nseCount">0 symbols</small></div><span class="list-check">↗</span></a>
+            <a class="list-card list-link" href="./lists.html?list=portfolio"><div class="list-icon purple">P</div><div><strong>My portfolio</strong><small id="portfolioCount">0 symbols</small></div><span class="list-check">↗</span></a>
+            <div class="import-box"><div class="upload-icon">▦</div><strong>Local lists</strong><span>Nifty200.csv and Holdings.csv</span><a class="button secondary" href="./lists.html">Open lists</a></div>
+            <div class="portfolio-note"><span>i</span><p>Data is read locally in your browser. Your API key and files never leave this device.</p></div>
+          </aside>
+        </section>
+
+        <section class="panel symbols-panel" id="watchlist">
+          <div class="panel-heading"><div><p class="eyebrow">INPUTS</p><h3>Symbol universe</h3></div><span class="muted">Read from Nifty200.csv</span></div>
+          <div class="input-row"><textarea id="symbolInput" placeholder="Loading Nifty200.csv…" readonly></textarea><div class="input-actions"><a class="button secondary" href="./lists.html?list=nse">Open NSE 200 list</a></div></div>
+        </section>
+
+        <section class="panel settings-panel" id="settings">
+          <div class="panel-heading"><div><p class="eyebrow">CONNECTION</p><h3>API settings</h3></div><a class="muted" href="https://indianapi.in/documentation/indian-stock-market" target="_blank" rel="noreferrer">How to get a key ↗</a></div>
+          <div class="settings-grid"><label>API key<input type="password" id="apiKey" placeholder="Enter your IndianAPI key" autocomplete="off" /></label><label>API base URL<input type="url" id="apiBase" value="https://stock.indianapi.in" /></label></div>
+          <p class="settings-help">One historical-data request per unique symbol supplies the current price, 200 DMA, and one-year price range. Successful results are cached for one day, and overlapping NSE 200/portfolio symbols are requested only once.</p>
+        </section>
+        <footer><span>Market Lens · Built for informed decisions, not financial advice.</span><span>Source: Indian Stock Exchange API</span></footer>
+      </main>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script src="./ui.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>

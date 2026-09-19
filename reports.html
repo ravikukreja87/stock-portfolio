@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#07111f" />
+    <title>Reports | Market Lens</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar"><div class="brand"><span class="brand-mark">↗</span><span>market<span class="brand-accent">lens</span></span></div><p class="eyebrow">INDIA / NSE</p><nav><a class="nav-link active" href="./reports.html"><span>▤</span> Reports</a><a class="nav-link" href="./index.html?overview=1"><span>◈</span> Overview</a><a class="nav-link" href="./lists.html"><span>⌁</span> Lists</a><a class="nav-link" href="./index.html?overview=1#settings"><span>⚙</span> API settings</a></nav><div class="sidebar-bottom"><div class="api-status"><span class="status-dot"></span><span>Local report cache</span></div><a href="https://indianapi.in/documentation/indian-stock-market" target="_blank" rel="noreferrer">API documentation ↗</a></div></aside>
+      <main class="main">
+        <header class="topbar"><div><p class="eyebrow">PORTFOLIO INTELLIGENCE</p><h1>Reports</h1></div><div class="topbar-actions"><span id="reportTime">Awaiting sync</span><button class="button secondary" id="refreshReports">Refresh data ↻</button><a class="button primary" href="./index.html?overview=1">Open overview ↗</a></div></header>
+        <section class="report-intro panel"><div><p class="eyebrow accent">ACTIONABLE SIGNALS</p><h2>Two focused views<br />for today.</h2><p>Results use the latest locally cached historical-data response. Prices and 200 DMA come from IndianAPI; 52-week levels are calculated from the same one-year history.</p></div><div class="report-summary"><div><strong id="holdingsCount">—</strong><span>holdings below DMA</span></div><div><strong id="nseCount">—</strong><span>NSE 200 near highs</span></div></div></section>
+        <section class="report-section panel"><div class="panel-heading"><div><p class="eyebrow">REPORT 01 · MY PORTFOLIO</p><h3>Holdings below 200 DMA</h3></div><span class="report-rule danger-rule">Price &lt; 200 DMA</span></div><p class="section-description">Your holdings where the latest price is below the 200-day moving average.</p><div class="table-wrap"><table><thead><tr><th>STOCK</th><th>LAST PRICE</th><th>200 DMA</th><th>BELOW DMA BY</th><th>52W RANGE</th></tr></thead><tbody id="holdingsTable"></tbody></table></div></section>
+        <section class="report-section panel"><div class="panel-heading"><div><p class="eyebrow">REPORT 02 · NSE 200</p><h3>Near 52-week highs above 200 DMA</h3></div><span class="report-rule good-rule">Within 5% of high + above DMA</span></div><p class="section-description">NSE 200 scrips trading within 5% of their 52-week high while remaining above the 200-day moving average.</p><div class="table-wrap"><table><thead><tr><th>STOCK</th><th>LAST PRICE</th><th>200 DMA</th><th>52W HIGH</th><th>UPSIDE TO HIGH</th></tr></thead><tbody id="nseTable"></tbody></table></div></section>
+        <div class="report-empty" id="reportEmpty" hidden><strong>No cached screening data</strong><span>Confirm Refresh data to populate these reports.</span><button class="button primary" id="emptyRefresh">Refresh market data</button></div>
+        <footer><span>Market Lens · Built for informed decisions, not financial advice.</span><span>Reports are based on cached API data</span></footer>
+      </main>
+    </div>
+    <script src="./ui.js"></script>
+    <script src="./reports.js"></script>
+  </body>
+</html>

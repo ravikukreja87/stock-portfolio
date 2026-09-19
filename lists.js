@@ -1,0 +1,8 @@
+const $ = (id) => document.getElementById(id);
+const clean = (text) => [...new Set(text.split(/[\s,;]+/).map((item) => item.trim().toUpperCase().replace(/\.(NS|BO)$/i, "")).filter((item) => /^[A-Z][A-Z0-9&-]{1,24}$/.test(item)))];
+const state = { selected: new URLSearchParams(location.search).get("list") === "portfolio" ? "portfolio" : "nse", nse: [], portfolio: [] };
+const toast = (message) => { $("toast").textContent = message; $("toast").classList.add("show"); setTimeout(() => $("toast").classList.remove("show"), 3500); };
+const refresh = () => { $("nseCount").textContent = `${state.nse.length} symbols`; $("portfolioCount").textContent = `${state.portfolio.length} symbols`; $("listTitle").textContent = state.selected === "nse" ? "NSE 200" : "My portfolio"; $("listHint").textContent = state.selected === "nse" ? "Loaded from Nifty200.csv" : "Loaded from Holdings.csv"; $("symbolChips").innerHTML = state[state.selected].map((symbol) => `<span>${symbol}</span>`).join("") || "<span class=\"muted\">This list is empty.</span>"; };
+async function loadList(path) { const response = await fetch(`./${path}`); if (!response.ok) throw new Error(`${path} could not be loaded`); return clean(await response.text()); }
+async function init() { try { [state.nse, state.portfolio] = await Promise.all([loadList("Nifty200.csv"), loadList("Holdings.csv")]); localStorage.setItem("marketLensSymbols", JSON.stringify(state.nse)); localStorage.setItem("marketLensPortfolio", JSON.stringify(state.portfolio)); refresh(); } catch (error) { toast(error.message); } document.querySelectorAll(".open-list").forEach((button) => button.addEventListener("click", () => { state.selected = button.dataset.list; refresh(); })); }
+init();
