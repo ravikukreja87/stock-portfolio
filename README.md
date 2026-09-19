@@ -22,6 +22,20 @@ The portfolio list is read from the bundled `Holdings.csv` file. List uploads ha
 
 Open `reports.html` for the two focused reports: holdings below 200 DMA, and NSE 200 scrips within 5% of their 52-week high while above 200 DMA. Reports use the cached screening results and do not make additional API calls.
 
+## Recommended Netlify proxy
+
+The repository includes `netlify.toml` and `netlify/functions/historical-data.js`. This keeps the IndianAPI key out of the GitHub Pages frontend:
+
+1. Create a Netlify site and connect it to this GitHub repository.
+2. Set the Netlify build settings to publish `.`. Netlify will detect the `netlify.toml` function directory.
+3. In **Site configuration → Environment variables**, add `INDIAN_API_KEY` with your IndianAPI key.
+4. Add `ALLOWED_ORIGIN` with your exact GitHub Pages origin, for example `https://your-user.github.io`. For a project site, use `https://your-user.github.io` without the repository path.
+5. Deploy the site and copy its URL, for example `https://your-market-proxy.netlify.app`.
+6. Open the GitHub Pages site, go to **Overview → API settings**, and set **API base URL / Netlify proxy URL** to that Netlify URL. Leave the direct API key blank.
+7. Click **Refresh data** on Reports and confirm the request.
+
+The function exposes only `GET /historical_data`, validates symbols and query options, adds the secret server-side, and forwards the response to GitHub Pages. Do not put `INDIAN_API_KEY` in GitHub Pages files or GitHub Actions logs. Use Netlify deploy logs to confirm that the function was published.
+
 If GitHub Pages shows an empty report, open **Reports → Refresh data**, confirm the dialog, and check the status line below the header. If the status says the CSV files cannot be loaded, verify that `Nifty200.csv` and `Holdings.csv` are committed in the same repository root as `reports.html`. GitHub Pages serves committed files only; local browser storage and API results are not deployed with the repository. If a new deployment is not visible, use a hard refresh (`Ctrl+F5`) and check **Actions → Pages build and deployment** for a successful deployment.
 
 The screening limit defaults to 20 symbols to avoid API rate limits. Increase it in API settings when required.

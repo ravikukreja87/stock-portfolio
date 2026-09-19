@@ -33,7 +33,8 @@ function render() {
 async function refreshData() {
   if (!window.confirm("Refresh report data now? This will make API calls for every unique symbol in Nifty200.csv and Holdings.csv.")) return;
   const key = localStorage.getItem("marketLensApiKey");
-  if (!key) { window.alert("Add your API key on the Overview page before refreshing."); return; }
+  const base = apiBase();
+  if (base === "https://stock.indianapi.in" && !key) { window.alert("Configure the Netlify proxy URL, or add a direct IndianAPI key on Overview."); return; }
   const button = $("refreshReports");
   button.disabled = true;
   button.textContent = "Refreshing…";

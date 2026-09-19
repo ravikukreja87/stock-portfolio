@@ -25,7 +25,8 @@ async function loadStock(symbol) {
 async function syncMarket() {
   const symbols = uniqueSymbols([...state.symbols, ...state.portfolioSymbols]);
   if (!symbols.length) { showToast("Nifty200.csv and Holdings.csv have no symbols."); return; }
-  if (!$("apiKey").value.trim()) { showToast("Add your IndianAPI key before syncing."); $("settings").scrollIntoView({ behavior: "smooth" }); return; }
+  const apiBase = $("apiBase").value.trim().replace(/\/$/, "");
+  if (apiBase === "https://stock.indianapi.in" && !$("apiKey").value.trim()) { showToast("Configure the Netlify proxy URL, or add a direct IndianAPI key."); $("settings").scrollIntoView({ behavior: "smooth" }); return; }
   $("syncButton").disabled = true; $("syncButton").textContent = "Syncing…"; setConnection(false, `Screening ${symbols.length} unique symbols`);
   const rows = [];
   for (let i = 0; i < symbols.length; i += 5) {

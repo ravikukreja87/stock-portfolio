@@ -70,8 +70,8 @@
 
         <section class="panel settings-panel" id="settings">
           <div class="panel-heading"><div><p class="eyebrow">CONNECTION</p><h3>API settings</h3></div><a class="muted" href="https://indianapi.in/documentation/indian-stock-market" target="_blank" rel="noreferrer">How to get a key ↗</a></div>
-          <div class="settings-grid"><label>API key<input type="password" id="apiKey" placeholder="Enter your IndianAPI key" autocomplete="off" /></label><label>API base URL<input type="url" id="apiBase" value="https://stock.indianapi.in" /></label></div>
-          <p class="settings-help">One historical-data request per unique symbol supplies the current price, 200 DMA, and one-year price range. Successful results are cached for one day, and overlapping NSE 200/portfolio symbols are requested only once.</p>
+          <div class="settings-grid"><label>Optional direct API key<input type="password" id="apiKey" placeholder="Leave blank when using Netlify proxy" autocomplete="off" /></label><label>API base URL / Netlify proxy URL<input type="url" id="apiBase" value="https://stock.indianapi.in" /></label></div>
+          <p class="settings-help">Recommended: set API base URL to your Netlify site URL. The Netlify Function keeps INDIAN_API_KEY server-side. Direct API-key mode is only a fallback. Each unique symbol is requested once and cached for one day.</p>
         </section>
         <footer><span>Market Lens · Built for informed decisions, not financial advice.</span><span>Source: Indian Stock Exchange API</span></footer>
       </main>

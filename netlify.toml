@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/historical_data"
+  to = "/.netlify/functions/historical-data"
+  status = 200
+  force = true
